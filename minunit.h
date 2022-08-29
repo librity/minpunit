@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 David Siñuela Pastor, siu.4coders@gmail.com
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
  * "Software"), to deal in the Software without restriction, including
@@ -8,10 +8,10 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -22,6 +22,29 @@
  */
 #ifndef MINUNIT_MINUNIT_H
 #define MINUNIT_MINUNIT_H
+
+/* Black, Red, Green, Yellow, Blue, Purple, Cyan, White */
+# define BK "\033[0;30m"
+# define R "\033[0;31m"
+# define G "\033[0;32m"
+# define Y "\033[0;33m"
+# define B "\033[0;34m"
+# define P "\033[0;35m"
+# define C "\033[0;36m"
+# define W "\033[0;37m"
+
+/* Bold */
+# define BKB "\033[1;30m"
+# define RB "\033[1;31m"
+# define GB "\033[1;32m"
+# define YB "\033[1;33m"
+# define BB "\033[1;34m"
+# define PB "\033[1;35m"
+# define CB "\033[1;36m"
+# define WB "\033[1;37m"
+
+/* Reset Color */
+# define RC "\033[0m"
 
 #ifdef __cplusplus
 	extern "C" {
@@ -120,7 +143,7 @@ static void (*minunit_teardown)(void) = NULL;
 	minunit_run++;\
 	if (minunit_status) {\
 		minunit_fail++;\
-		printf("F");\
+		printf(RB "F");\
 		printf("\n%s\n", minunit_last_message);\
 	}\
 	fflush(stdout);\
@@ -131,10 +154,10 @@ static void (*minunit_teardown)(void) = NULL;
 #define MU_REPORT() MU__SAFE_BLOCK(\
 	double minunit_end_real_timer;\
 	double minunit_end_proc_timer;\
-	printf("\n\n%d tests, %d assertions, %d failures\n", minunit_run, minunit_assert, minunit_fail);\
+	printf(YB "\n\n%d tests, %d assertions, %d failures\n" RC, minunit_run, minunit_assert, minunit_fail);\
 	minunit_end_real_timer = mu_timer_real();\
 	minunit_end_proc_timer = mu_timer_cpu();\
-	printf("\nFinished in %.8f seconds (real) %.8f seconds (proc)\n\n",\
+	printf(C "\nFinished in %.8f seconds (real) %.8f seconds (proc)\n\n" RC,\
 		minunit_end_real_timer - minunit_real_timer,\
 		minunit_end_proc_timer - minunit_proc_timer);\
 )
@@ -144,17 +167,17 @@ static void (*minunit_teardown)(void) = NULL;
 #define mu_check(test) MU__SAFE_BLOCK(\
 	minunit_assert++;\
 	if (!(test)) {\
-		snprintf(minunit_last_message, MINUNIT_MESSAGE_LEN, "%s failed:\n\t%s:%d: %s", __func__, __FILE__, __LINE__, #test);\
+		snprintf(minunit_last_message, MINUNIT_MESSAGE_LEN, RB "%s failed:\n\t%s:%d: %s" RC, __func__, __FILE__, __LINE__, #test);\
 		minunit_status = 1;\
 		return;\
 	} else {\
-		printf(".");\
+		printf(GB "." RC);\
 	}\
 )
 
 #define mu_fail(message) MU__SAFE_BLOCK(\
 	minunit_assert++;\
-	snprintf(minunit_last_message, MINUNIT_MESSAGE_LEN, "%s failed:\n\t%s:%d: %s", __func__, __FILE__, __LINE__, message);\
+	snprintf(minunit_last_message, MINUNIT_MESSAGE_LEN, RB "%s failed:\n\t%s:%d: %s" RC, __func__, __FILE__, __LINE__, message);\
 	minunit_status = 1;\
 	return;\
 )
@@ -162,11 +185,11 @@ static void (*minunit_teardown)(void) = NULL;
 #define mu_assert(test, message) MU__SAFE_BLOCK(\
 	minunit_assert++;\
 	if (!(test)) {\
-		snprintf(minunit_last_message, MINUNIT_MESSAGE_LEN, "%s failed:\n\t%s:%d: %s", __func__, __FILE__, __LINE__, message);\
+		snprintf(minunit_last_message, MINUNIT_MESSAGE_LEN, RB "%s failed:\n\t%s:%d: %s" RC, __func__, __FILE__, __LINE__, message);\
 		minunit_status = 1;\
 		return;\
 	} else {\
-		printf(".");\
+		printf(GB "." RC);\
 	}\
 )
 
@@ -177,11 +200,11 @@ static void (*minunit_teardown)(void) = NULL;
 	minunit_tmp_e = (expected);\
 	minunit_tmp_r = (result);\
 	if (minunit_tmp_e != minunit_tmp_r) {\
-		snprintf(minunit_last_message, MINUNIT_MESSAGE_LEN, "%s failed:\n\t%s:%d: %d expected but was %d", __func__, __FILE__, __LINE__, minunit_tmp_e, minunit_tmp_r);\
+		snprintf(minunit_last_message, MINUNIT_MESSAGE_LEN, RB "%s failed:\n\t%s:%d: %d expected but was %d" RC, __func__, __FILE__, __LINE__, minunit_tmp_e, minunit_tmp_r);\
 		minunit_status = 1;\
 		return;\
 	} else {\
-		printf(".");\
+		printf(GB "." RC);\
 	}\
 )
 
@@ -193,11 +216,11 @@ static void (*minunit_teardown)(void) = NULL;
 	minunit_tmp_r = (result);\
 	if (fabs(minunit_tmp_e-minunit_tmp_r) > MINUNIT_EPSILON) {\
 		int minunit_significant_figures = 1 - log10(MINUNIT_EPSILON);\
-		snprintf(minunit_last_message, MINUNIT_MESSAGE_LEN, "%s failed:\n\t%s:%d: %.*g expected but was %.*g", __func__, __FILE__, __LINE__, minunit_significant_figures, minunit_tmp_e, minunit_significant_figures, minunit_tmp_r);\
+		snprintf(minunit_last_message, MINUNIT_MESSAGE_LEN, RB "%s failed:\n\t%s:%d: %.*g expected but was %.*g" RC, __func__, __FILE__, __LINE__, minunit_significant_figures, minunit_tmp_e, minunit_significant_figures, minunit_tmp_r);\
 		minunit_status = 1;\
 		return;\
 	} else {\
-		printf(".");\
+		printf(GB "." RC);\
 	}\
 )
 
@@ -216,7 +239,7 @@ static void (*minunit_teardown)(void) = NULL;
 		minunit_status = 1;\
 		return;\
 	} else {\
-		printf(".");\
+		printf(GB "." RC);\
 	}\
 )
 
@@ -239,13 +262,13 @@ static double mu_timer_real(void)
 	/* Windows 2000 and later. ---------------------------------- */
 	LARGE_INTEGER Time;
 	LARGE_INTEGER Frequency;
-	
+
 	QueryPerformanceFrequency(&Frequency);
 	QueryPerformanceCounter(&Time);
-	
+
 	Time.QuadPart *= 1000000;
 	Time.QuadPart /= Frequency.QuadPart;
-	
+
 	return (double)Time.QuadPart / 1000000.0;
 
 #elif (defined(__hpux) || defined(hpux)) || ((defined(__sun__) || defined(__sun) || defined(sun)) && (defined(__SVR4) || defined(__svr4__)))

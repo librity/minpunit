@@ -1,10 +1,18 @@
-## MinUnit
+## Purty MinUnit
+
+My Features:
+
+- [x] Colors!
+- [ ] Divider with executable name.
+- [ ] More assertions.
+
+## About
 
 Minunit is a minimal unit testing framework for C/C++ self-contained in a
 single header file.
 
 It provides a way to define and configure test suites and a few handy assertion
-types.  It reports the summary of the number of tests run, number of assertions
+types. It reports the summary of the number of tests run, number of assertions
 and time elapsed.
 
 Note that this project is based on:
