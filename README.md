@@ -1,6 +1,16 @@
-## Purty MinUnit
+# `minpunit.h` Test Framework
 
-My Features:
+The Punies are a species of small quadrupedal creatures which resemble insects.
+They live in the Great Tree located in the Boggly Woods.
+Mario must use them to defeat a rival clan, the Jabbies, twice in the Great Tree.
+
+[![Punies](.github/punis.jpg)](https://www.mariowiki.com/Puni)
+
+The name "Puni" is likely derived from「ぷにぷに」(punipuni),
+a Japanese word describing something squishy,
+but also resembles the English word "puny", meaning "small".
+
+## @librity's Features
 
 - [x] Colors!
 - [ ] Divider with executable name.
@@ -41,7 +51,7 @@ int main(int argc, char *argv[]) {
 
 Which will produce the following output:
 
-```
+```elixir
 F
 test_check failed:
 	readme_sample.c:4: 5 == 7
@@ -55,8 +65,8 @@ Finished in 0.00032524 seconds (real) 0.00017998 seconds (proc)
 Check out `minunit_example.c` to see a complete example. Compile with something
 like:
 
-```
-gcc minunit_example.c -lrt -lm -o minunit_example
+```bash
+$ gcc minunit_example.c -lrt -lm -o minunit_example
 ```
 
 Don't forget to add `-lrt` for the timer and `-lm` for linking the function `fabs`
@@ -85,6 +95,8 @@ equal or show their values as the error message
 are almost equal or show their values as the error message. The value of
 `MINUNIT_EPSILON` sets the threshold to determine if the values are close enough.
 
+`mu_assert_string_eq(expected, result)`: it will pass if both C-strings are equal.
+
 ## Authors
 
-David Siñuela Pastor <siu.4coders@gmail.com>
+Luis Geniole <luis.geniole@yandex.com>
