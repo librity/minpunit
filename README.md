@@ -44,7 +44,7 @@ MU_TEST_SUITE(test_suite) {
 }
 
 MU_MAIN {
-	MU_DIVIDER
+	MU_DIVIDER;
 	MU_RUN_SUITE(test_suite);
 	MU_REPORT();
 	return MU_EXIT_CODE;
@@ -54,6 +54,7 @@ MU_MAIN {
 Which will produce the following output (with colors):
 
 ```elixir
+===================== RUNNING ./test.out =====================
 F
 test_check failed:
 	readme_sample.c:4: 5 == 7
