@@ -13,8 +13,9 @@ but also resembles the English word "puny", meaning "small".
 ## @librity's Features
 
 - [x] Colors!
-- [ ] Divider with executable name.
-- [ ] More assertions.
+- [x] Divider with executable name.
+- [ ] More assertions:
+  - [ ] `memcmp` assertion: `mu_assert_mem_eq(void* expected, void*  result, size_t size)`
 
 ## About
 
@@ -42,14 +43,15 @@ MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(test_check);
 }
 
-int main(int argc, char *argv[]) {
+MU_MAIN {
+	MU_DIVIDER
 	MU_RUN_SUITE(test_suite);
 	MU_REPORT();
 	return MU_EXIT_CODE;
 }
 ```
 
-Which will produce the following output:
+Which will produce the following output (with colors):
 
 ```elixir
 F
@@ -100,3 +102,5 @@ are almost equal or show their values as the error message. The value of
 ## Authors
 
 Luis Geniole <luis.geniole@yandex.com>
+
+Original Framework: David Siñuela Pastor <siu.4coders@gmail.com>
